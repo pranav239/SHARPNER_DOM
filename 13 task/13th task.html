@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+   <style>
+      #form{
+        background-color: rebeccapurple;
+      }
+   </style>
+  </head>
+  <body align="center">
+    <form id="form">
+      <label for="name">NAME :</label>
+      <INput type="text" name="name" id ='nameofperson' required></INput><BR></BR>
+      <label for="email">E-MAIL :</label>
+      <INput type="email" name="email" required></INput><BR></BR>
+      <label for="phone">PHONE NO :</label>
+      <INput type="tel" name="phone" required></INput><BR></BR>
+      <INput type="submit" name="submit" value="SUBMIT"></INput><BR></BR>
+    </form>
+    <ul id="items"></ul>
+  </body>
+  <script>
+    let addItem=document.querySelector('form');
+    addItem.addEventListener('submit',addDetails);
+
+    // let items=document.querySelector('#items');
+    // items.addEventListener('click',remove);
+
+
+     
+    function addDetails(e)
+    {
+        e.preventDefault();
+      let name=e.target.name.value;
+      let mail=e.target.email.value;
+      let phone=e.target.phone.value;
+
+      let user={
+        name,
+        mail,
+        phone,
+      };
+      
+      localStorage.setItem(user.name ,JSON.stringify(user));
+      showuser(user);  
+    }
+    function showuser(user)
+    {   let ul=document.querySelector('#items');
+        let li=document.createElement('li');
+        li.textContent=`${user.name}  -  ${user.mail}  -  ${user.phone}`;
+        let dltBtn =document.createElement('input');
+        dltBtn.type='button';
+        dltBtn.id='delete';
+        dltBtn.className='deleteclass'
+        dltBtn.value='X';
+        li.appendChild(dltBtn);
+        ul.appendChild(li);
+        //
+        dltBtn.onclick=()=>{
+          localStorage.removeItem(user.name);
+          console.log(li.textContent)
+          
+          ul.removeChild(li)
+        }//
+    }
+    // function remove(e)
+    // {
+    //   if(e.target.className==='deleteclass')
+    //   {
+    //     if(confirm('are you sure'))
+    //     {
+    //       let li=e.target.parentElement;
+    //       let username = li.textContent.split('  -  ')[0]; 
+    //       console.log(username)
+    //       localStorage.removeItem(username);
+    //       items.removeChild(li);
+
+    //     }
+    //   }
+    // }
+
+  </script>
+   
+  </script>
+</html>
