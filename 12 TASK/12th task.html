@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+   
+  </head>
+  <body align="center">
+    <form>
+      <label for="name">NAME :</label>
+      <INput type="text" name="name" id ='nameofperson' required></INput><BR></BR>
+      <label for="email">E-MAIL :</label>
+      <INput type="email" name="email" required></INput><BR></BR>
+      <label for="phone">PHONE NO :</label>
+      <INput type="tel" name="phone" required></INput><BR></BR>
+      <INput type="submit" name="submit" value="SUBMIT"></INput><BR></BR>
+    </form>
+    <ul id="items"></ul>
+  </body>
+  <script>
+
+    let addItem=document.querySelector('form');
+    addItem.addEventListener('submit',addDetails);
+     
+    function addDetails(e)
+    {
+        e.preventDefault();
+      let name=e.target.name.value;
+      let mail=e.target.email.value;
+      let phone=e.target.phone.value;
+
+      let user={
+        name,
+        mail,
+        phone,
+      };
+      
+      localStorage.setItem(user.name ,JSON.stringify(user));
+      showuser(user);
+    
+
+     
+    }
+    function showuser(user)
+    {   let ul=document.querySelector('#items');
+        let li=document.createElement('li');
+        li.textContent=`${user.name}  -   ${user.mail}  -   ${user.phone}`;
+        ul.appendChild(li);
+
+
+    }
+
+    // let person = {
+    //   name: "pranav",
+    //   age: 24,
+    // };
+    // console.log(person.age);
+
+    // let person_serialized = JSON.stringify(person);
+    // console.log(person_serialized);
+    // localStorage.setItem("data", person_serialized);
+
+    // let person_deserialized = JSON.parse(localStorage.getItem("data"));
+    // console.log(person_deserialized.age);
+  </script>
+   
+  </script>
+</html>
