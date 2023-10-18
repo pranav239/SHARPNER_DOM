@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+   <style>
+      #form{
+        background-color: rebeccapurple;
+      }
+   </style>
+  </head>
+  <body align="center">
+    <form id="form">
+      <label for="name">NAME :</label>
+      <INput type="text" name="name" id ='nameofperson' required></INput><BR></BR>
+      <label for="email">E-MAIL :</label>
+      <INput type="email" name="email" id ='mailofperson' required></INput><BR></BR>
+      <label for="phone">PHONE NO :</label>
+      <INput type="tel" name="phone" id ='noofperson' required></INput><BR></BR>
+      <input type="submit" name="submit" value="SUBMIT"></input>
+       <input type="button" name="resubmit" value="RESUBMIT"  ></input>
+
+    </form>
+    <ul id="items"></ul>
+  </body>
+  <script>
+    let addItem=document.querySelector('form');
+    addItem.addEventListener('submit',addDetails);
+
+
+
+     
+    function addDetails(e)
+    {
+        e.preventDefault();
+      let name=e.target.name.value;
+      let mail=e.target.email.value;
+      let phone=e.target.phone.value;
+
+      let user={
+        name,
+        mail,
+        phone,
+      };
+      
+      localStorage.setItem(user.name ,JSON.stringify(user));
+      showuser(user);  
+    }
+    function showuser(user)
+    {   let ul=document.querySelector('#items');
+        let li=document.createElement('li');
+        li.textContent=`${user.name}  -  ${user.mail}  -  ${user.phone}`;
+        let dltBtn =document.createElement('input');
+        dltBtn.type='button';
+        dltBtn.id='delete';
+        dltBtn.className='deleteclass'
+        dltBtn.value='X';
+        let editBtn=document.createElement('input');
+        editBtn.type='button';
+        editBtn.id='edit';
+      editBtn.className='editclass'
+     editBtn.value='EDIT';
+     li.appendChild(editBtn);
+
+        li.appendChild(dltBtn);
+        ul.appendChild(li);
+        // //
+        // dltBtn.onclick=()=>{
+        //   localStorage.removeItem(user.name);
+        //   console.log(li.textContent)
+          
+        //   ul.removeChild(li)
+        // }//
+    }
+    
+    let items=document.querySelector('#items');
+    items.addEventListener('click',remove);
+    function remove(e)
+    {
+      if(e.target.className==='deleteclass')
+      {
+        if(confirm('are you sure'))
+        {
+          let li=e.target.parentElement;
+          let username = li.textContent.split('  -  ')[0]; 
+          console.log(username)
+          localStorage.removeItem(username);
+          items.removeChild(li);
+
+        }
+      }
+    }
+
+    items.addEventListener('click',edit);
+    function edit(e)
+    {
+      if(e.target.className==='editclass')
+      {
+        if(confirm('are you sure'))
+        {
+          let li=e.target.parentElement;
+          let liNext = li.nextSibling;
+         
+
+          let username = li.textContent.split('  -  ')[0]; 
+          let email = li.textContent.split('  -  ')[1];
+          let phone = li.textContent.split('  -  ')[2];
+
+          let nameinput=document.querySelector('#nameofperson');
+          let mailinput=document.querySelector('#mailofperson');
+          let phoneinput=document.querySelector('#noofperson');
+           
+             nameinput.value=username;
+             mailinput.value=email;
+             phoneinput.value=phone;
+             items.removeChild(li);
+          localStorage.removeItem(username);
+
+          let button=document.querySelector('input[name="resubmit"]')
+              button.onclick=()=>
+              {
+             let ul=document.querySelector('#items');
+            
+             
+          let username = li.textContent.split('  -  ')[0]; 
+          let email = li.textContent.split('  -  ')[1];
+          let phone = li.textContent.split('  -  ')[2];
+          let linew = document.createElement('li');
+          
+          linew.textContent = `${nameinput.value}  -  ${mailinput.value}  -  ${phoneinput.value}`;
+          let dltBtn =document.createElement('input');
+        dltBtn.type='button';
+        dltBtn.id='delete';
+        dltBtn.className='deleteclass'
+        dltBtn.value='X';
+        let editBtn=document.createElement('input');
+        editBtn.type='button';
+        editBtn.id='edit';
+      editBtn.className='editclass'
+     editBtn.value='EDIT';
+     linew.appendChild(editBtn);
+
+        linew.appendChild(dltBtn);
+          
+
+            ul.insertBefore(linew, liNext);
+              };
+          
+          
+          
+          
+       }
+      }
+    }
+
+
+
+  </script>
+   
+  </script>
+</html>
